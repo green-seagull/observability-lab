@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.22.2
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-storage:/etc/prometheus
+    ports:
+      - 9090:9090
+  grafana:
+    # Default u: admin p: admin
+    image: grafana/grafana:7.1.0
+    # Datasource URL: http://prometheus:9090
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - 3000:3000
+  observability-lab:
+    ports:
+      - 8081:8080
+    image: observability-lab:0.0.1-SNAPSHOT
+
+volumes:
+  prometheus-storage:
+  grafana-storage:
